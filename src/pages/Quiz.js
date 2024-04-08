@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { nanoid } from "nanoid";
 import "../App.css";
 import he from "he";
@@ -9,7 +9,7 @@ export function Quiz() {
     const [correctAnswers, setCorrectAnswers] = React.useState({});
     const [shuffledAnswers, setShuffledAnswers] = React.useState({});
     const [score, setScore] = React.useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = React.useState(true);
   
     React.useEffect(() => {
       fetch('https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple')
