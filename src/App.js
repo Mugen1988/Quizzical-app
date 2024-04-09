@@ -5,10 +5,12 @@ import { Quiz } from "./pages/Quiz";
 import { BlobLeft, BlobRight } from "./components/Blobs";
 
 function App() {
-  const [startGame, setStartGame] = useState(false)
+  const [startGame, setStartGame] = useState(false);
+  const [selectedDifficulty, setSelectedDifficulty] = useState(null);
 
   // Callback for starting the game
-  const startGameHandler = () => {
+  const startGameHandler = (difficulty) => {
+    setSelectedDifficulty(difficulty);
     setStartGame(true);
   };
 
@@ -19,10 +21,8 @@ function App() {
 
   return (
     <main>
-      <BlobLeft />
-      <BlobRight />
       {!startGame && <Start startGame={startGameHandler} />}
-      {startGame && <Quiz playAgain={playAgainHandler} />}
+      {startGame && <Quiz playAgain={playAgainHandler} difficulty={selectedDifficulty} />}
     </main>
   );
 }
