@@ -12,13 +12,11 @@ export function Quiz({ playAgain, difficulty }) {
   const [score, setScore] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // eslint-disable-next-line no-unused-vars
   const [newQuestionsEnabled, setNewQuestionsEnabled] = useState(false); // State to enable/disable the button
 
-  useEffect(() => {
-    fetchQuestions();
-  }, [difficulty]);
-
-  const fetchQuestions = () => {
+  const fetchQuestions = React.useCallback(() => {
     setLoading(true);
     setError(null);
     fetch(`https://opentdb.com/api.php?amount=5&difficulty=${difficulty}&type=multiple`)
@@ -30,9 +28,8 @@ export function Quiz({ playAgain, difficulty }) {
           correct_answer: he.decode(question.correct_answer),
           incorrect_answers: question.incorrect_answers.map(answer => he.decode(answer))
         }));
-        setData(decodedData); //set Data to fetched decoded data from API
+        setData(decodedData);
 
-        //shuffling correct answer with other answers to get random index
         const correctAnswersObj = {};
         const shuffledAnswersObj = {};
         decodedData.forEach((question, index) => {
@@ -46,15 +43,21 @@ export function Quiz({ playAgain, difficulty }) {
         setCorrectAnswers(correctAnswersObj);
         setShuffledAnswers(shuffledAnswersObj);
         setLoading(false);
-        setNewQuestionsEnabled(true); // Enable the button after fetching new questions
+        setNewQuestionsEnabled(true);
       })
       .catch(error => {
         setError(error);
         setLoading(false);
-        setNewQuestionsEnabled(true); // Enable the button even if fetching failed
+        setNewQuestionsEnabled(true);
         console.error('Error fetching data:', error);
       });
-  };
+  }, [difficulty]);
+
+  useEffect(() => {
+    fetchQuestions();
+  }, [fetchQuestions])
+
+  
 
   //conditions for error/loading
   if (error) {
