@@ -21,6 +21,8 @@ function App() {
 
   return (
     <main>
+      <BlobLeft />
+      <BlobRight />
       {!startGame && <Start startGame={startGameHandler} />}
       {startGame && <Quiz playAgain={playAgainHandler} difficulty={selectedDifficulty} />}
     </main>
