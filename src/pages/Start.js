@@ -16,6 +16,9 @@ export function Start({ startGame }) {
           <h1 className="start-title">Quizzical</h1>
           <h2 className="start-subtitle">
             Stretch Your Brain - Trivia that Spans from Shakespeare to Sharknado!
+            <br />
+            <br />
+            Choose difficulty:
           </h2>
           <div className="radio-container">
             <input
